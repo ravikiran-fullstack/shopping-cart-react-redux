@@ -3,6 +3,7 @@ import data from "./data.json";
 
 import Products from "./components/Products";
 import Filter from "./components/Filter";
+import Cart from "./components/Cart";
 
 class App extends React.Component {
   constructor() {
@@ -11,8 +12,27 @@ class App extends React.Component {
       products: data.products,
       size: "",
       sort: "",
+      cartItems: [],
     };
   }
+
+  addToCart = (product) => {
+    const cartItems = this.state.cartItems.slice();
+    let alreadyInCart = false;
+    cartItems.forEach((item) => {
+      if (item._id === product._id) {
+        console.log("item already there ");
+        item.count++;
+        alreadyInCart = true;
+      }
+    });
+
+    if (!alreadyInCart) {
+      cartItems.push({ ...product, count: 1 });
+    }
+
+    this.setState({ cartItems });
+  };
 
   sortProducts = (event) => {
     console.log(event.target.value);
@@ -52,9 +72,14 @@ class App extends React.Component {
                 filterProducts={this.filterProducts}
                 sortProducts={this.sortProducts}
               ></Filter>
-              <Products products={this.state.products}></Products>
+              <Products
+                products={this.state.products}
+                addToCart={this.addToCart}
+              ></Products>
             </div>
-            <div className='sidebar'>Cart Items</div>
+            <div className='sidebar'>
+              <Cart cartItems={this.state.cartItems}></Cart>
+            </div>
           </div>
         </main>
         <footer>All Rights Reserved</footer>
