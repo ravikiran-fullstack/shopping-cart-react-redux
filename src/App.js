@@ -17,7 +17,7 @@ class App extends React.Component {
   }
 
   addToCart = (product) => {
-    const cartItems = this.state.cartItems.slice();
+    const cartItems = this.state.cartItems.slice(); // clone copy of state cartItems
     let alreadyInCart = false;
     cartItems.forEach((item) => {
       if (item._id === product._id) {
@@ -32,6 +32,17 @@ class App extends React.Component {
     }
 
     this.setState({ cartItems });
+  };
+
+  removeFromCart = (product) => {
+    // console.log(product._id);
+    const cartItems = this.state.cartItems.slice();
+    const newCartItems = cartItems.filter((item) => {
+      // console.log(item._id, product._id, item._id != product._id);
+      return item._id != product._id;
+    });
+    // console.log(newCartItems);
+    this.setState({ cartItems: newCartItems });
   };
 
   sortProducts = (event) => {
@@ -78,7 +89,10 @@ class App extends React.Component {
               ></Products>
             </div>
             <div className='sidebar'>
-              <Cart cartItems={this.state.cartItems}></Cart>
+              <Cart
+                cartItems={this.state.cartItems}
+                removeFromCart={this.removeFromCart}
+              ></Cart>
             </div>
           </div>
         </main>
