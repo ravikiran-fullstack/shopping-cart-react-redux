@@ -195,3 +195,24 @@ a {
   justify-content: space-between;
   align-items: center;
 }
+
+form {
+  width: 100%;
+}
+
+.form-container {
+  padding: 0px;
+  list-style: none;
+  width: 100%;
+}
+
+.form-container li {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+input {
+  padding: 1rem;
+  border: 0.1rem #c0c0c0 solid;
+}
